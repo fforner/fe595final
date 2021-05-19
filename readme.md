@@ -32,7 +32,7 @@ POS Tagging - Tells the users what part-of-speech indicated words are (i.e. noun
 **Known Issues**
 
 - Wikipedia scraper does not work for all wikipedia pages. It works best for famous people profiles like the ones below: 
-1.https://en.wikipedia.org/wiki/Donald_Trump
-2.https://en.wikipedia.org/wiki/Barack_Obama
-3.https://en.wikipedia.org/wiki/Cristiano_Ronaldo
+  1.https://en.wikipedia.org/wiki/Donald_Trump
+  2.https://en.wikipedia.org/wiki/Barack_Obama
+  3.https://en.wikipedia.org/wiki/Cristiano_Ronaldo
 - Summarization service works for more than 10 sentences. Ideally for best results, if you enter a long text or use the default text provided it gives the best results
