@@ -61,8 +61,17 @@ function CheckService(val){
 </script>
 </head>
 <body>
+<b>Description of Services:</b>
 
-
+<ul>
+    <li><b><u>Polarity and Frequency:</u></b> Polarity gives you a sense of the sentiment of the text. It returns positive, neutral or negative sentiment based on the polarity score. The frequency plot shows the most common words in the text</li>
+    <li><b><u>Similarity: </u></b>Similarity measures tells us how close two words are. Our service allows you to enter two words and find how closely related the words in your text are similar to those 2 key words</li>
+    <li><b><u>Word Cloud: </u></b>WordCloud organizes the frequency count and displays it such that the words that occur more are greater in size</li>
+    <li><b><u>POS Tagging: </u></b>Tells the users what part-of-speech indicated words are (i.e. nouns, verbs, adjectives, etc.)</li>
+    <li><b><u>Subjectivity: </u></b>Subjectivity ranges from [0,1] and measures the amount of personal opinion and factual information is contained in the text. Subjective sentences generally refer to personal opinion, emotion or judgment whereas objective refers to factual information. A score of 1 means that the text is more subject while a 0 means that the text is more factual</li>
+    <li><b><u>Summarization: </u></b>The text summary features summarizes the given text into a few sentences. In order for it to work, users MUST input 10 or more sentences and have a total word count of greater than 100</li>
+    <li><b><u>All services: </u></b>Combination of all services together</li>
+</ul>
 <form action="/services" method = "POST" id="nlpinput">
     <label for="service">Choose a service:</label>
 <select  required id="service" name="service" onchange='CheckService(this.value);' >
