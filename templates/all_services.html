@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Services</title>
+    <style>
+        .parentdiv1{
+    width:100px;
+    height:100px;
+    border:1px solid #f64141;
+    margin-right:10px;
+    float:left;
+}
+.childdiv1{
+    float:left;
+    margin-right:5px;
+}
+    </style>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.4/d3.layout.cloud.js"></script>
+</head>
+<body>
+<h2>Polarity</h2>
+<p><b>Overall Polarity of the input text: </b> {{ pol_score }}</p><br/><br/>
+
+<br/>
+<br/>
+<h2>Frequency</h2>
+<canvas id="chart" width="600" height="400"></canvas>
+<script>
+var barData = {
+labels : [{% for item in labels %}
+           "{{ item }}",
+          {% endfor %}
+	],
+
+        datasets : [{
+          fillColor: "rgba(151,187,205,0.2)",
+          strokeColor: "rgba(151,187,205,1)",
+          pointColor: "rgba(151,187,205,1)",
+          data : [
+            {% for item in values %}
+               "{{ item }}",
+              {% endfor %}
+	    ]
+          }
+        ]
+      }
+
+     // get bar chart canvas
+     var mychart = document.getElementById("chart").getContext("2d");
+
+     steps = 10
+     max = {{max}}
+
+     // draw bar chart
+     new Chart(mychart).Bar(barData, {
+       scaleOverride: true,
+       scaleSteps: steps,
+       scaleStepWidth: Math.ceil(max / steps),
+       scaleStartValue: 0,
+       scaleShowVerticalLines: true,
+       scaleShowGridLines : true,
+       barShowStroke : true,
+       scaleShowLabels: true
+       }
+     );
+
+</script>
+
+<h2>Similarity</h2>
+<div clas="parentdiv">
+<div class="childdiv1"'>
+{% for table in table1 %}
+            {{title1[loop.index]}}
+            {{ table|safe }}
+    {% endfor %}
+</div>
+<div class="childdiv2">
+{% for table in table2 %}
+            {{title2[loop.index]}}
+            {{ table|safe }}
+    {% endfor %}
+</div>
+</div>
+
+<h2>Word Cloud</h2>
+<div>
+<script>
+
+  var word_freqs = {{ word_freqs|safe }};
+  max_freq = {{ max_freq }};
+  fill = d3.scale.category20();
+  layout = d3.layout.cloud()
+      .size([1000, 500])
+      .words(word_freqs)
+      .padding(5)
+      .rotate(0)
+      .font("Impact")
+      .fontSize(function(d) {
+         return (d.size/max_freq)*100;
+      })
+      .on("end", draw);
+
+  layout.start();
+
+  function draw(words) {
+    d3.select("body").append("svg")
+      .attr("width", layout.size()[0])
+      .attr("height", layout.size()[1])
+      .attr("style", "display: block; margin-left: auto; margin-right: auto; background: white; text-align: center;")
+      .append("g")
+      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+      .selectAll("text")
+      .data(words)
+      .enter().append("text")
+      .style("font-size", function(d) { return d.size + "px"; })
+      .style("font-family", "Impact")
+      .style("fill", function(d, i) { return fill(i); })
+      .attr("text-anchor", "middle")
+      .attr("transform", function(d) {
+        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+      })
+      .text(function(d) { return d.text; });
+  }
+</script>
+</div>
+
+<h2>Subjectivity</h2>
+<p>
+    Subjectivity is <b>{{ data1 }}</b>
+</p>
+
+<h2>POS Tagging</h2>
+{{svg | safe}}
+</body>
+</html>

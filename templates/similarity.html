@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .parentdiv1{
+    width:100px;
+    height:100px;
+    border:1px solid #f64141;
+    margin-right:10px;
+    float:left;
+}
+.childdiv1{
+    float:left;
+    margin-right:5px;
+}
+    </style>
+</head>
+<body>
+<div clas="parentdiv">
+<div class="childdiv1"'>
+{% for table in table1 %}
+            {{title1[loop.index]}}
+            {{ table|safe }}
+    {% endfor %}
+</div>
+<div class="childdiv2">
+{% for table in table2 %}
+            {{title2[loop.index]}}
+            {{ table|safe }}
+    {% endfor %}
+</div>
+</div>
+</body>
+</html>

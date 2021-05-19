@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NLP API POST INSTRUCTIONS</title>
+
+    <script type="text/javascript">
+        function CheckType(val){
+            var elem1 = document.getElementById('manual')
+            if(val =='manual_article') {
+                elem1.style.display = 'block';
+            }
+            else{
+                elem1.style.display='none';
+            }
+        }
+        function removeWikiBox(val) {
+        var elem = document.getElementById('wikilink');
+        var elem2 = document.getElementById('textinput');
+        var elem3= document.getElementById('ourscraper');
+        var elem4= document.getElementById('ourscraperlabel');
+        var elem5= document.getElementById('package_based_scraper');
+        var elem6= document.getElementById('package_based_scraperlabel');
+        elem.style.display='none';
+        elem2.style.display='block';
+        elem3.style.display='none';
+        elem4.style.display='none';
+        elem5.style.display='none';
+        elem6.style.display='none';
+        }
+        function removeTextBox(val){
+            var elem = document.getElementById('textinput');
+            var elem2 = document.getElementById('wikilink');
+            var elem3= document.getElementById('ourscraper');
+            var elem4= document.getElementById('ourscraperlabel');
+            var elem5= document.getElementById('package_based_scraper');
+            var elem6= document.getElementById('package_based_scraperlabel');
+            elem.style.display = 'none'
+            elem2.style.display='block';
+            elem3.style.display='block';
+            elem4.style.display='block';
+            elem5.style.display='block';
+            elem6.style.display='block';
+        }
+function CheckService(val){
+ var element1=document.getElementById('word1');
+ var element2=document.getElementById('word2');
+ var element3=document.getElementById('helptext');
+ if(val=='similarity'){
+   element1.style.display='block';
+   element2.style.display='block';
+   element3.style.display='block';}
+ else{
+   element1.style.display='none';
+   element2.style.display='none';
+   element3.style.display='none';
+
+ }
+}
+
+</script>
+</head>
+<body>
+
+
+<form action="/services" method = "POST" id="nlpinput">
+    <label for="service">Choose a service:</label>
+<select  required id="service" name="service" onchange='CheckService(this.value);' >
+    <option value="polarity_and_frequency">Polarity and Frequency</option>
+    <option value="similarity">similarity</option>
+    <option value="word_cloud">word_cloud</option>
+    <option value="pos_tagging">POS_Tagging</option>
+    <option value="subjectivity">subjectivity</option>
+    <option value="summarization">summarization</option>
+    <option value="all_services">All Services</option>
+</select>
+
+  <p>Do you want to run services on text or wikipedia link?(choose one)</p>
+    <fieldset>
+    <input type="radio" id="text" name="type" value="text" onclick="removeWikiBox(this.value);" >
+  <label for="text">Text</label><br>
+  <input type="radio" id="wiki_link" name="type" value="wiki_link" onclick="removeTextBox(this.value);">
+  <label for="wiki_link">Wikipedia Link</label><br>
+        </fieldset>
+    <p><textarea required rows="4" cols="50" name="content" form="nlpinput" id="textinput">Born and raised in Queens, New York City, Trump attended Fordham University and the University of Pennsylvania, graduating with a bachelor's degree in 1968. He became the president of his father Fred Trump's real estate business in 1971 and renamed it to The Trump Organization. Trump expanded the company's operations to building and renovating skyscrapers, hotels, casinos, and golf courses. He later started various side ventures, mostly by licensing his name. Trump and his businesses have been involved in more than 4,000 state and federal legal actions, including six bankruptcies. He owned the Miss Universe brand of beauty pageants from 1996 to 2015. From 2003 to 2015 he co-produced and hosted the reality television series The Apprentice.
+
+</textarea></p>
+    <input type="text" name = "wiki" id="wikilink" value="https://en.wikipedia.org/wiki/Donald_Trump"/>
+
+    <p style='display:none;' id="helptext" > Add two opposite terms to compare. For example, good and bad. </p>
+    <p><input style='display:none;' type="text" name = "word1" value="good" id="word1" /></p>
+    <p><input style='display:none;' type="text" name = "word2" value="bad" id="word2" /></p>
+
+    <input style='display:none;' type="radio" id="ourscraper" name="typescraper" value="our_scraper" >
+    <label style='display:none;' id="ourscraperlabel" for="text">Beautifulsoup Based Scraper(Currently taking more time)</label><br>
+    <input style='display:none;' type="radio" id="package_based_scraper" name="typescraper" value="package_based_scraper">
+    <label style='display:none;' id="package_based_scraperlabel" for="package_based_scraper">Package Based Scraper</label>
+
+        <p><input type = "submit" value = "submit" /></p>
+</form>
+
+
+
+
+</body>
+</html>
