@@ -99,10 +99,10 @@ def services():
             word1sim, word2sim, word1, word2 = similarity(form_text,form_data['word1'],form_data['word2'])
             x = [i[1] for i in word1sim]
             y = [i[1] for i in word2sim]
-            word1sim = pd.DataFrame(word1sim, columns = ['Word','Similarity score with' + word1])
-            word1sim = word1sim.sort_values(by=['Similarity score with'+ word1],ascending=False)
-            word2sim = pd.DataFrame(word2sim, columns = ['Word','Similarity score with' + word2])
-            word2sim = word2sim.sort_values(by=['Similarity score with'+ word2], ascending=False)
+            word1sim = pd.DataFrame(word1sim, columns = ['Word','Similarity score with ' + word1])
+            word1sim = word1sim.sort_values(by=['Similarity score with '+ word1],ascending=False)
+            word2sim = pd.DataFrame(word2sim, columns = ['Word','Similarity score with ' + word2])
+            word2sim = word2sim.sort_values(by=['Similarity score with '+ word2], ascending=False)
             #return render_template('similarity.html', labels = x, values = y, max = 1)
             return render_template('similarity.html',table1=[word1sim.to_html(classes='data')], title1=word1sim.columns.values,table2=[word2sim.to_html(classes='data')], title2=word2sim.columns.values)
         elif form_data['service'] == 'word_cloud': #Akshat
@@ -131,13 +131,11 @@ def services():
             freq_results = frequency(form_text)
             x = [i[0] for i in freq_results]
             y = [i[1] for i in freq_results]
-            word1sim, word2sim = similarity(form_text, form_data['word1'], form_data['word2'])
-            #x = [i[1] for i in word1sim]
-            #y = [i[1] for i in word2sim]
-            word1sim = pd.DataFrame(word1sim, columns=['Word', 'Similarity score with word1'])
-            word1sim = word1sim.sort_values(by=['Similarity score with word1'], ascending=False)
-            word2sim = pd.DataFrame(word2sim, columns=['Word', 'Similarity score with word2'])
-            word2sim = word2sim.sort_values(by=['Similarity score with word2'], ascending=False)
+            word1sim, word2sim, word1, word2 = similarity(form_text, form_data['word1'], form_data['word2'])
+            word1sim = pd.DataFrame(word1sim, columns=['Word', 'Similarity score with ' + word1])
+            word1sim = word1sim.sort_values(by=['Similarity score with ' + word1], ascending=False)
+            word2sim = pd.DataFrame(word2sim, columns=['Word', 'Similarity score with ' + word2])
+            word2sim = word2sim.sort_values(by=['Similarity score with ' + word2], ascending=False)
             word_freqs, max_freq = word_cloud_generator(form_text)
             sub = subjectivity(form_text)
             svg = pos_tagging(form_text)
