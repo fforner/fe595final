@@ -60,7 +60,7 @@ function CheckService(val){
 
 </script>
 </head>
-<body>
+<body onload="document.refresh();">
 <b>Description of Services:</b>
 
 <ul>
@@ -86,7 +86,7 @@ function CheckService(val){
 
   <p>Do you want to run services on text or wikipedia link?(choose one)</p>
     <fieldset>
-    <input type="radio" id="text" name="type" value="text" onclick="removeWikiBox(this.value);" >
+    <input type="radio" id="text" name="type" value="text" onclick="removeWikiBox(this.value);" checked>
   <label for="text">Text</label><br>
   <input type="radio" id="wiki_link" name="type" value="wiki_link" onclick="removeTextBox(this.value);">
   <label for="wiki_link">Wikipedia Link</label><br>
