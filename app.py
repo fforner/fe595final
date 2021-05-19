@@ -18,11 +18,11 @@ import matplotlib.pyplot as plt
 import os
 app = Flask(__name__)
 def say_hello(username = "World"):
-    return '<h1>FE 595 Mid Term Project</h1>'
+    return '<h1>FE 595 Final Term Project</h1>'
 
 # some bits of text for the page.
 header_text = '''
-    <html>\n<head> <title>FE 595 Mid Term Project</title> </head>\n<body>'''
+    <html>\n<head> <title>FE 595 Final Term Project</title> </head>\n<body><b>Project Members</b><br/><ul><li>Akshat Goel</li><li>Francesco Forner</li><li>Giovanni Scalzotto</li><li>Kevin Shah</li></ul>  '''
 instructions = '''
     <p><a href="/services">Check out the NLP services!</a></p>\n'''
 home_link = '<p><a href="/">Back</a></p>\n'
@@ -82,6 +82,13 @@ def services():
                 return '<html><p>Please enter a valid link</p></html>'
         else:
             form_text = form_data['content']
+
+        punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+        no_punct = ""
+        for i in form_text:
+            if i not in punctuations:
+                no_punct = no_punct + i
+        form_text = no_punct
         if form_data['service'] == 'polarity_and_frequency':
             pol_score = polarity(form_text)
             freq_results = frequency(form_text)
@@ -89,15 +96,15 @@ def services():
             y = [i[1] for i in freq_results]
             return render_template('pol_and_freq.html', pol_score = pol_score, labels = x, values = y, max = max(y))
         elif form_data['service'] == 'similarity':
-            word1sim, word2sim = similarity(form_text,form_data['word1'],form_data['word2'])
+            word1sim, word2sim, word1, word2 = similarity(form_text,form_data['word1'],form_data['word2'])
             x = [i[1] for i in word1sim]
             y = [i[1] for i in word2sim]
-            word1sim = pd.DataFrame(word1sim, columns = ['Word','Similarity score with word1'])
-            word1sim = word1sim.sort_values(by=['Similarity score with word1'],ascending=False)
-            word2sim = pd.DataFrame(word2sim, columns = ['Word','Similarity score with word2'])
-            word2sim = word2sim.sort_values(by=['Similarity score with word2'], ascending=False)
+            word1sim = pd.DataFrame(word1sim, columns = ['Word','Similarity score with' + word1])
+            word1sim = word1sim.sort_values(by=['Similarity score with'+ word1],ascending=False)
+            word2sim = pd.DataFrame(word2sim, columns = ['Word','Similarity score with' + word2])
+            word2sim = word2sim.sort_values(by=['Similarity score with'+ word2], ascending=False)
             #return render_template('similarity.html', labels = x, values = y, max = 1)
-            return render_template('similarity.html',table1=[word1sim.to_html(classes='data')], title1=word1sim.columns.values,table2=[word2sim.to_html(classes='data')], title2=word2sim.columns.values )
+            return render_template('similarity.html',table1=[word1sim.to_html(classes='data')], title1=word1sim.columns.values,table2=[word2sim.to_html(classes='data')], title2=word2sim.columns.values)
         elif form_data['service'] == 'word_cloud': #Akshat
             word_freqs, max_freq = word_cloud_generator(form_text)
             return render_template('word_cloud.html',word_freqs = word_freqs, max_freq = max_freq )

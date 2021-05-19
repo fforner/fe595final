@@ -36,7 +36,7 @@ def similarity(x, word1 = 'good', word2 = 'bad'):
         bad = npl_small(word2).similarity(npl_small(string)) #do a similarity with bad
         word1sim.append((string, good))
         word2sim.append((string,bad))
-    return word1sim,word2sim
+    return word1sim,word2sim, word1, word2
     pass
 
             
